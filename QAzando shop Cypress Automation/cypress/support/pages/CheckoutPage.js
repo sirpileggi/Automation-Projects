@@ -1,5 +1,5 @@
 class CheckoutPage {
-    // 1. Mapeamento de Elementos (Adicionamos os seletores novos aqui)
+
     get inputFirstName() { return cy.get('#fname'); }
     get inputLastName() { return cy.get('#lname'); }
     get inputCompany() { return cy.get('#cname'); }
@@ -11,8 +11,6 @@ class CheckoutPage {
     get inputNotes() { return cy.get('#messages'); }
     get checkboxTerms() { return cy.get('#materialUnchecked'); }
     get buttonSubmitForm() { return cy.get('.theme-btn-one.btn-black-overlay.btn_sm').eq(0); }
-
-    // --- NOVOS ELEMENTOS DE PAGAMENTO ---
     get radioBankTransfer() { return cy.get('#html'); }
     get radioMobileBanking() { return cy.get('#javascript'); }
     get radioPaypal() { return cy.get('#css'); }
@@ -20,8 +18,6 @@ class CheckoutPage {
     get modalSuccess() { return cy.get('.offer_modal_left'); }
     get modalFailure() { return cy.get('.errorLabel'); }
 
-
-    // 2. Ações da Página (Preenchimento de dados)
     visit() { cy.visit('/checkout-one'); }
     fillFirstName(name) { this.inputFirstName.type(name); }
     fillLastName(lastName) { this.inputLastName.type(lastName); }
@@ -47,9 +43,7 @@ class CheckoutPage {
         if (data.notes) this.fillNotes(data.notes);
     }
 
-    // --- NOVA FUNÇÃO INTELIGENTE DE PAGAMENTO ---
     selectPaymentAndConfirm(method) {
-        // 1. O 'switch' escolhe qual caixinha marcar dependendo do texto enviado
         switch (method.toLowerCase()) {
             case 'bank':
             case 'bank transfer':
@@ -66,11 +60,9 @@ class CheckoutPage {
                 throw new Error(`Forma de pagamento "${method}" não é válida!`);
         }
 
-        // 2. Clica no botão final de confirmação (.eq(1))
         this.buttonConfirmOrder.click();
     }
 
-    // --- NOVA FUNÇÃO DE VALIDAÇÃO ---
     verifyOrderSuccess() {
         this.modalSuccess.should('contain', 'Order success!');
     }

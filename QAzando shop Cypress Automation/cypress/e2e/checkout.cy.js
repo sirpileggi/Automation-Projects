@@ -2,23 +2,8 @@
 import CheckoutPage from '../support/pages/CheckoutPage';
 import BillingData from '../support/data/BillingData';
 
-//Tentativa de compra sem preencher campos obrigatórios
-//Tentativa de compra sem preencher nome
-//Tentativa de compra sem preencher sobrenome
-//Tentativa de compra sem preencher nome da empresa
-//Tentativa de compra sem preencher e-mail
-//Tentativa de compra sem selecionar país
-//Tentativa de compra sem preencher estado/cidade
-//Tentativa de compra sem preencher código postal
-//Tentativa de compra sem preencher endereço
-//Tentativa de compra sem preencher complemento
-//Dados salvos persistem em novas seções
-//Pedido realizado é adicionado a lista de pedidos 
-
-
 describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
 
-    // Massa de dados comum para os testes de caminho feliz
     const validData = {
         name: 'Vinicius',
         lastName: 'Pileggi',
@@ -38,12 +23,10 @@ describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
     it("Bank transfer order", () => {
         CheckoutPage.fillBillingForm(validData);
         CheckoutPage.checkTerms();
-        CheckoutPage.submitForm(); // Envia o formulário de dados (Botão eq(0))
+        CheckoutPage.submitForm(); 
 
-        // Aqui usamos a nova função passando 'bank'
         CheckoutPage.selectPaymentAndConfirm('bank');
 
-        // Valida se o modal de sucesso apareceu
         CheckoutPage.verifyOrderSuccess();
     })
 
@@ -52,9 +35,7 @@ describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
         CheckoutPage.checkTerms();
         CheckoutPage.submitForm();
 
-        // Aqui passamos 'mobile'
         CheckoutPage.selectPaymentAndConfirm('mobile');
-
         CheckoutPage.verifyOrderSuccess();
     })
 
@@ -63,14 +44,11 @@ describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
         CheckoutPage.checkTerms();
         CheckoutPage.submitForm();
 
-        // Aqui passamos 'paypal'
         CheckoutPage.selectPaymentAndConfirm('paypal');
-
         CheckoutPage.verifyOrderSuccess();
     })
 
     it("Order without filling required fields", () => {
-        // Não preenchemos nenhum campo
         CheckoutPage.checkTerms();
         CheckoutPage.submitForm();
 
