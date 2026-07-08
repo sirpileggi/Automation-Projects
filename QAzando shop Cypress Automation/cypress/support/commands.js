@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('checkoutBilling', (name = 'Vinicius', lastName = 'Pileggi', company = 'Vini Services', email = 'vini@gmail.com', zipCode = '03191000', address = 'Av. Paulista, 1000', notes = 'nada a informar') => {
+Cypress.Commands.add('checkoutBilling', (name = faker.person.firstName(), lastName = faker.person.lastName(), company = faker.company.name(), email = faker.internet.email(), zipCode = faker.address.zipCode(), address = faker.address.streetAddress(), notes = 'nada a informar') => {
     cy.visit('/checkout-one')
     cy.get('#fname').type(name)
     cy.get('#lname').type(lastName)

@@ -1,14 +1,15 @@
 /// <reference types="cypress" />
 import CheckoutPage from '../support/pages/CheckoutPage';
 import BillingData from '../support/data/BillingData';
+import { faker } from '@faker-js/faker';
 
 describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
 
     const validData = {
-        name: 'Vinicius',
-        lastName: 'Pileggi',
-        company: 'Vini Services',
-        email: 'vini@gmail.com',
+        name: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        company: faker.company.name(),
+        email: faker.internet.email(),
         countryIndex: 1,
         cityIndex: 1,
         zipCode: '03191000',
