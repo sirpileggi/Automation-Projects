@@ -14,7 +14,7 @@ class CheckoutPage {
     get radioBankTransfer() { return cy.get('#html'); }
     get radioMobileBanking() { return cy.get('#javascript'); }
     get radioPaypal() { return cy.get('#css'); }
-    get buttonConfirmOrder() { return cy.get('.theme-btn-one.btn-black-overlay.btn_sm').eq(1); } // O botão com índice .eq(1)
+    get buttonConfirmOrder() { return cy.get('.theme-btn-one.btn-black-overlay.btn_sm').eq(1); } 
     get modalSuccess() { return cy.get('.offer_modal_left'); }
     get modalFailure() { return cy.get('.errorLabel'); }
 
