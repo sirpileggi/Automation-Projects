@@ -1,50 +1,64 @@
 /// <reference types="cypress" />
 
+import LoginPage from '../support/pages/LoginPage';
+import LoginData from '../support/data/LoginData';
+
 describe("Login", () => {
 
       beforeEach(() => {
-            cy.visit('/login')
+            LoginPage.visit();
       })
 
       it("Successfull Login", () => {
+            const validCredentials = LoginData.getValidCredentials();
             
-            cy.login();
+            LoginPage.fillLoginForm(validCredentials);
+            LoginPage.submit();
+            
       })
 
       it("Empty e-mail field", () => {
-            
-            cy.get('#password').type('viniqa')
-            cy.get('#btnLogin').click()
-            cy.get('.invalid_input').should('have.text', 'E-mail inválido.')
+            const credentialsWithoutEmail = LoginData.getValidCredentials();
+            delete credentialsWithoutEmail.email;
+
+            LoginPage.fillLoginForm(credentialsWithoutEmail);
+            LoginPage.submit();
+
+            LoginPage.verifyErrorMessage('E-mail inválido.');
       })
 
       it("Empty password field", () => {
-            
-            cy.get('#user').type('vini@gmail.com')
-            cy.get('#btnLogin').click()
-            cy.get('.invalid_input').should('have.text', 'Senha inválida.')
-      })
+            const credentialsWithoutPassword = LoginData.getValidCredentials();
+            delete credentialsWithoutPassword.password;
+
+            LoginPage.fillLoginForm(credentialsWithoutPassword);
+            LoginPage.submit();
+
+            LoginPage.verifyErrorMessage('Senha inválida.');
+      }) 
 
       it("Empty e-mail and password fields", () => {
-            
-            cy.get('#btnLogin').click()
-            cy.get('.invalid_input').should('have.text', 'E-mail inválido.')
-
+            LoginPage.submit();
+            LoginPage.verifyErrorMessage('E-mail inválido.');
       })
 
       it("Invalid e-mail", () => {
-            
-            cy.get('#user').type('vini.@gmail.com')
-            cy.get('#password').type('viniqa')
-            cy.get('#btnLogin').click()
-            cy.get('.invalid_input').should('have.text', 'E-mail inválido.')
+            const invalidEmailData = LoginData.getValidCredentials();
+            invalidEmailData.email = 'vini.@gmail.com'; 
+
+            LoginPage.fillLoginForm(invalidEmailData);
+            LoginPage.submit();
+
+            LoginPage.verifyErrorMessage('E-mail inválido.');
       })
 
       it("Invalid password", () => {
-            
-            cy.get('#user').type('vini@gmail.com')
-            cy.get('#password').type('vini')
-            cy.get('#btnLogin').click()
-            cy.get('.invalid_input').should('have.text', 'Senha inválida.')
+            const invalidPasswordData = LoginData.getValidCredentials();
+            invalidPasswordData.password = 'vini'; 
+
+            LoginPage.fillLoginForm(invalidPasswordData);
+            LoginPage.submit();
+
+            LoginPage.verifyErrorMessage('Senha inválida.');
       })
 })

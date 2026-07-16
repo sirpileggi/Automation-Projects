@@ -3,7 +3,7 @@ import CheckoutPage from '../support/pages/CheckoutPage';
 import BillingData from '../support/data/BillingData';
 import { faker } from '@faker-js/faker';
 
-describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
+describe("Checkout", () => {
 
     const validData = {
         name: faker.person.firstName(),
@@ -12,9 +12,9 @@ describe("Checkout - Fluxos de Pagamento bem-sucedidos", () => {
         email: faker.internet.email(),
         countryIndex: 1,
         cityIndex: 1,
-        zipCode: '03191000',
-        address: 'Av. Paulista, 1000',
-        notes: 'nada a informar'
+        zipCode: faker.location.zipCode(),
+        address: faker.location.street(),
+        notes: faker.lorem.words()
     };
 
     beforeEach(() => {

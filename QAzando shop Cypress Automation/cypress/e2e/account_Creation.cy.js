@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import RegisterPage from '../support/pages/RegisterPage'; 
+import RegisterData from '../support/data/RegisterData'; 
 
 describe("Account Creation", () => {
 
@@ -8,53 +9,64 @@ describe("Account Creation", () => {
     })
 
     it("Successful account creation", () => {
-        cy.accountCreate();
+        const validUser = RegisterData.getValidUser();
+        
+        RegisterPage.fillRegisterForm(validUser);
+        RegisterPage.submit();
+        
     })
 
     it("Empty name field", () => {
-        RegisterPage.fillEmail('vinicius@gmail.com');
-        RegisterPage.fillPassword('vinicius123');
+        const userWithoutName = RegisterData.getValidUser();
+        delete userWithoutName.name; 
+        
+        RegisterPage.fillRegisterForm(userWithoutName);
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo nome deve ser prenchido');
     })
 
     it("Empty email field", () => {
-        RegisterPage.fillName('Vinicius');
-        RegisterPage.fillPassword('vinicius123');
+        const userWithoutEmail = RegisterData.getValidUser();
+        delete userWithoutEmail.email; 
+        
+        RegisterPage.fillRegisterForm(userWithoutEmail);
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente');
     })
 
     it("Empty password field", () => {
-        RegisterPage.fillName('Vinicius');
-        RegisterPage.fillEmail('vinicius@gmail.com');
+        const userWithoutPassword = RegisterData.getValidUser();
+        delete userWithoutPassword.password; 
+        
+        RegisterPage.fillRegisterForm(userWithoutPassword);
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos');
     })
 
     it("Empty name, email and password fields", () => {
-        RegisterPage.fillPassword('vinicius123');
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo nome deve ser prenchido');
     })
 
     it("Invalid email", () => {
-        RegisterPage.fillName('Vinicius');
-        RegisterPage.fillEmail('vinicius');
-        RegisterPage.fillPassword('123456');
+        const userInvalidEmail = RegisterData.getValidUser();
+        userInvalidEmail.email = 'vinicius'; 
+        
+        RegisterPage.fillRegisterForm(userInvalidEmail);
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente');
     })
 
     it("Invalid password with less than 6 characters", () => {
-        RegisterPage.fillName('Vinicius');
-        RegisterPage.fillEmail('vinicius@gmail.com');
-        RegisterPage.fillPassword('123');
+        const userInvalidPassword = RegisterData.getValidUser();
+        userInvalidPassword.password = '123'; 
+        
+        RegisterPage.fillRegisterForm(userInvalidPassword);
         RegisterPage.submit();
         
         RegisterPage.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos');

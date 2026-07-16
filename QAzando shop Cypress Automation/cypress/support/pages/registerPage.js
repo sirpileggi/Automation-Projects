@@ -1,5 +1,5 @@
 class RegisterPage {
-    
+
     get inputName() { return cy.get('#user'); }
     get inputEmail() { return cy.get('#email'); }
     get inputPassword() { return cy.get('#password'); }
@@ -10,16 +10,15 @@ class RegisterPage {
         cy.visit('/register');
     }
 
-    fillName(name) {
-        this.inputName.type(name);
-    }
+    fillName(name) { this.inputName.type(name); }
+    fillEmail(email) { this.inputEmail.type(email); }
+    fillPassword(password) { this.inputPassword.type(password); }
 
-    fillEmail(email) {
-        this.inputEmail.type(email);
-    }
 
-    fillPassword(password) {
-        this.inputPassword.type(password);
+    fillRegisterForm(data) {
+        if (data.name) this.fillName(data.name);
+        if (data.email) this.fillEmail(data.email);
+        if (data.password) this.fillPassword(data.password);
     }
 
     submit() {

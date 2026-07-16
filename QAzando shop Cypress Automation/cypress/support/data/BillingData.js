@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 
 class BillingData {
     
-    // Removida a palavra 'static'
     getValidData() {
         return {
             name: faker.person.firstName(),
@@ -18,5 +17,4 @@ class BillingData {
     }
 }
 
-// Exportamos uma nova instância, igual aos Page Objects!
 export default new BillingData();
